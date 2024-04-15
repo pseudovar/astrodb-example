@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {List} from '../components/List'
+
+import { db, Pets } from 'astro:db'
+
+
+const pets = await db
+    .select()
+    .from(Pets).all()
+
+console.log(pets)
+
+---
+
+<Layout title="Welcome to Astro.">
+<h1>Pets</h1>
+<h2>DB Select in Page</h2>
+<ul>
+{pets.map((pet) => {
+	return <li>{pet.name}</li>
+})}
+</ul>
+<h2>DB Select from API</h2>
+<List client:load />
+
+</Layout>
